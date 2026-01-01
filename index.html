@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Mallikarjun Verma | Supply Chain Analytics</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --stripe-blurple:#635bff;
+      --stripe-navy:#0a2540;
+      --stripe-text:#425466;
+      --stripe-muted:#8898aa;
+      --stripe-bg:#ffffff;
+      --stripe-surface:#f6f9fc;
+
+      --shadow-md: 0 12px 28px rgba(50, 50, 93, 0.12), 0 8px 16px rgba(0,0,0,0.06);
+      --shadow-lg: 0 24px 60px rgba(50, 50, 93, 0.18), 0 12px 24px rgba(0,0,0,0.10);
+
+      --radius: 18px;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --t: 220ms var(--ease);
+
+      /* Fluid spacing */
+      --pad-x: clamp(16px, 3vw, 24px);
+      --section-y: clamp(72px, 8vw, 110px);
+
+      /* Fluid typography */
+      --h1: clamp(2.2rem, 3.7vw, 3.65rem);
+      --h2: clamp(1.75rem, 2.6vw, 2.35rem);
+      --p: clamp(1.0rem, 1.2vw, 1.12rem);
+      --p-lg: clamp(1.05rem, 1.35vw, 1.18rem);
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--stripe-text);
+      line-height:1.6;
+      background:var(--stripe-bg);
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+    }
+    h1,h2,h3,h4{color:var(--stripe-navy);letter-spacing:-0.03em;line-height:1.12;}
+    p{margin-bottom:1.2rem;font-size:var(--p);color:var(--stripe-text);}
+    a{color:inherit;text-decoration:none;transition:transform var(--t), opacity var(--t), color var(--t), background var(--t), box-shadow var(--t), border var(--t);}
+    ul{list-style:none;}
+
+    .container{max-width:1120px;margin:0 auto;padding:0 var(--pad-x);}
+    .section-padding{padding:var(--section-y) 0;}
+
+    /* ===== Background FX (safe across devices) ===== */
+    .bg-fx{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden;}
+    .bg-grid{
+      position:absolute; inset:-60px;
+      background: radial-gradient(#dce3eb 1px, transparent 1px);
+      background-size: 26px 26px;
+      opacity:0.30;
+      mask-image: radial-gradient(closest-side at 50% 40%, rgba(0,0,0,1), rgba(0,0,0,0));
+      animation: gridDrift 18s var(--ease) infinite alternate;
+      transform: translateZ(0);
+    }
+    @keyframes gridDrift{
+      from{transform:translate3d(-12px,-8px,0) scale(1);}
+      to{transform:translate3d(14px,10px,0) scale(1.02);}
+    }
+    .blob{
+      position:absolute;
+      width:clamp(360px, 45vw, 560px);
+      height:clamp(360px, 45vw, 560px);
+      border-radius:50%;
+      filter: blur(45px);
+      opacity:0.42;
+      transform: translate3d(0,0,0);
+      animation: blobFloat 14s var(--ease) infinite alternate;
+    }
+    .blob.b1{left:-160px; top:-120px;background: radial-gradient(circle at 30% 30%, rgba(99,91,255,0.65), rgba(99,91,255,0)); animation-duration:16s;}
+    .blob.b2{right:-180px; top:40px;background: radial-gradient(circle at 30% 30%, rgba(0,214,255,0.55), rgba(0,214,255,0)); animation-duration:18s;}
+    .blob.b3{left:40%; bottom:-240px;background: radial-gradient(circle at 30% 30%, rgba(255,183,77,0.60), rgba(255,183,77,0)); animation-duration:20s;}
+    @keyframes blobFloat{
+      0%{transform:translate3d(0,0,0) scale(1);}
+      50%{transform:translate3d(28px,-18px,0) scale(1.04);}
+      100%{transform:translate3d(-18px,20px,0) scale(0.98);}
+    }
+
+    /* ===== Nav (desktop + mobile) ===== */
+    nav{
+      position:fixed;top:0;left:0;right:0;
+      z-index:1000;
+      background:rgba(255,255,255,0.70);
+      backdrop-filter: blur(14px);
+      border-bottom:1px solid rgba(10,37,64,0.08);
+      transition: box-shadow 300ms var(--ease), background 300ms var(--ease);
+      padding-top: env(safe-area-inset-top);
+    }
+    nav.scrolled{background:rgba(255,255,255,0.86); box-shadow: 0 10px 30px rgba(10,37,64,0.08);}
+    .nav-content{display:flex;align-items:center;justify-content:space-between;padding:14px 0;}
+    .logo{
+      font-weight:800;font-size:1.08rem;letter-spacing:-0.03em;color:var(--stripe-navy);
+      display:flex;align-items:center;gap:10px;
+    }
+    .logo-dot{
+      width:10px;height:10px;border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, #9aa7ff, var(--stripe-blurple));
+      box-shadow: 0 0 0 6px rgba(99,91,255,0.12);
+    }
+
+    .nav-links{display:flex;align-items:center;gap:22px;}
+    .nav-links a{
+      font-weight:600;font-size:0.92rem;color:var(--stripe-navy);
+      opacity:0.74;padding:10px 10px;border-radius:999px;
+    }
+    .nav-links a:hover{opacity:1;background: rgba(10,37,64,0.04);}
+    .nav-links a.link-accent:hover{background: rgba(99,91,255,0.10); color:var(--stripe-blurple);}
+    .cta-small{
+      background:var(--stripe-navy);
+      color:#fff !important;
+      opacity:1 !important;
+      padding:10px 14px !important;
+      border-radius:999px;
+      box-shadow: 0 10px 22px rgba(10,37,64,0.14);
+    }
+    .cta-small:hover{transform:translateY(-1px); box-shadow: 0 16px 30px rgba(10,37,64,0.18);}
+
+    /* Mobile menu */
+    .menu-btn{
+      display:none;
+      width:44px;height:44px;border-radius:12px;
+      border:1px solid rgba(10,37,64,0.10);
+      background:rgba(255,255,255,0.75);
+      box-shadow: 0 10px 22px rgba(10,37,64,0.08);
+      align-items:center;justify-content:center;
+      cursor:pointer;
+    }
+    .menu-btn svg{width:22px;height:22px;color:var(--stripe-navy);}
+    .mobile-panel{
+      display:none;
+      border-top:1px solid rgba(10,37,64,0.08);
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px);
+    }
+    .mobile-panel .inner{
+      padding: 12px 0 18px 0;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .mobile-panel a{
+      padding:12px 12px;
+      border-radius:14px;
+      font-weight:700;
+      color:var(--stripe-navy);
+      background: rgba(10,37,64,0.03);
+      border: 1px solid rgba(10,37,64,0.08);
+    }
+    .mobile-panel a:hover{border-color: rgba(99,91,255,0.22); background: rgba(99,91,255,0.08);}
+    .mobile-panel a.primary{
+      background: var(--stripe-blurple);
+      border-color: transparent;
+      color:#fff;
+    }
+
+    /* ===== Hero ===== */
+    .hero{
+      position:relative;
+      padding-top: calc(120px + env(safe-area-inset-top));
+      padding-bottom: clamp(70px, 8vw, 110px);
+      overflow:hidden;
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(99,91,255,0.18), rgba(99,91,255,0) 60%),
+        radial-gradient(900px 450px at 85% 20%, rgba(0,214,255,0.16), rgba(0,214,255,0) 60%),
+        radial-gradient(1200px 520px at 70% 80%, rgba(255, 183, 77,0.20), rgba(255, 183, 77,0) 55%),
+        linear-gradient(180deg, #ffffff 0%, #ffffff 45%, #f6f9fc 100%);
+    }
+    .hero::after{
+      content:"";
+      position:absolute; left:0; right:0; bottom:-1px;
+      height: clamp(72px, 9vw, 110px);
+      background: var(--stripe-surface);
+      clip-path: polygon(0 55%, 100% 0, 100% 100%, 0 100%);
+      pointer-events:none;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: clamp(26px, 5vw, 56px);
+      align-items:center;
+      position:relative;
+      z-index:2;
+    }
+
+    .hero-kicker{
+      display:inline-flex;align-items:center;gap:10px;
+      color:var(--stripe-blurple);font-weight:800;letter-spacing:0.08em;
+      text-transform:uppercase;font-size:0.78rem;margin-bottom:16px;
+      flex-wrap:wrap;
+    }
+    .hero-kicker .chip{
+      background: rgba(99,91,255,0.12);
+      border:1px solid rgba(99,91,255,0.18);
+      padding:6px 10px;border-radius:999px;
+      letter-spacing:0.06em;font-weight:800;
+    }
+
+    .hero-text h1{
+      font-size: var(--h1);
+      margin-bottom:18px;
+      background: linear-gradient(90deg, #0a2540 0%, #3e4c5e 35%, #635bff 70%, #0a2540 100%);
+      background-size: 200% 100%;
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      animation: textShimmer 7s var(--ease) infinite;
+    }
+    @keyframes textShimmer{
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
+    }
+    .hero-text p{font-size:var(--p-lg);max-width:560px;margin-bottom:28px;}
+
+    .hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:0.86rem;font-weight:650;color:var(--stripe-navy);
+      background: rgba(10,37,64,0.04);
+      border: 1px solid rgba(10,37,64,0.08);
+      padding: 8px 12px;border-radius: 999px;
+      transition: transform var(--t), box-shadow var(--t), border var(--t);
+    }
+    .pill:hover{transform: translateY(-2px); box-shadow: 0 14px 30px rgba(10,37,64,0.10); border-color: rgba(99,91,255,0.22);}
+    .pill b{font-weight:800;}
+    .pill .dot{
+      width:7px;height:7px;border-radius:50%;
+      background: var(--stripe-blurple);
+      box-shadow: 0 0 0 6px rgba(99,91,255,0.12);
+    }
+
+    .btn-group{display:flex;gap:14px;align-items:center;flex-wrap:wrap;}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding: 12px 18px;border-radius: 999px;
+      font-weight:700;font-size: 0.98rem;
+      border: 1px solid transparent;
+      cursor:pointer; user-select:none;
+      transition: transform var(--t), box-shadow var(--t), background var(--t), color var(--t), border var(--t);
+      position:relative;
+      overflow:hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn::after{
+      content:"";
+      position:absolute; inset:-40%;
+      background: linear-gradient(120deg, rgba(255,255,255,0) 30%, rgba(255,255,255,0.35) 45%, rgba(255,255,255,0) 60%);
+      transform: translateX(-50%) rotate(8deg);
+      transition: transform 700ms var(--ease);
+      pointer-events:none;
+    }
+    .btn:hover::after{transform: translateX(55%) rotate(8deg);}
+    .btn-primary{background: var(--stripe-blurple);color:#fff;box-shadow: 0 14px 30px rgba(99,91,255,0.22);}
+    .btn-primary:hover{transform: translateY(-2px); box-shadow: 0 24px 56px rgba(99,91,255,0.30);}
+    .btn-ghost{background: rgba(255,255,255,0.7);border: 1px solid rgba(10,37,64,0.12);color: var(--stripe-navy);}
+    .btn-ghost:hover{transform: translateY(-2px);border-color: rgba(99,91,255,0.30);box-shadow: 0 22px 54px rgba(10,37,64,0.12);}
+    .link-arrow{
+      display:inline-flex;align-items:center;gap:8px;
+      font-weight:700;color: var(--stripe-blurple);
+      padding: 10px 6px;border-radius: 10px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .link-arrow:hover{color: var(--stripe-navy);}
+    .arrow{display:inline-block;transition: transform var(--t);}
+    .link-arrow:hover .arrow{transform: translateX(3px);}
+
+    /* ===== Hero visual (rings) ===== */
+    .visual-wrap{position:relative;}
+    .rings{
+      position:absolute; inset:-20px;
+      pointer-events:none; z-index:0; opacity:0.95;
+    }
+    .ring{
+      position:absolute;
+      border-radius:999px;
+      border: 1px solid rgba(99,91,255,0.20);
+      box-shadow: 0 0 0 12px rgba(99,91,255,0.06);
+      animation: spin 18s linear infinite;
+      transform-origin:center;
+    }
+    .ring.r1{width:clamp(320px, 42vw, 420px);height:clamp(320px, 42vw, 420px);left:50%;top:50%;}
+    .ring.r2{width:clamp(390px, 50vw, 520px);height:clamp(390px, 50vw, 520px);left:50%;top:50%;border-color: rgba(0,214,255,0.18);box-shadow: 0 0 0 12px rgba(0,214,255,0.05);animation-duration:26s;animation-direction: reverse;}
+    .ring.r3{width:clamp(240px, 32vw, 300px);height:clamp(240px, 32vw, 300px);left:50%;top:50%;border-color: rgba(255,183,77,0.22);box-shadow: 0 0 0 12px rgba(255,183,77,0.06);animation-duration:22s;}
+    .ring.r1,.ring.r2,.ring.r3{transform:translate(-50%,-50%) rotate(0deg);}
+    @keyframes spin{
+      from{transform:translate(-50%,-50%) rotate(0deg);}
+      to{transform:translate(-50%,-50%) rotate(360deg);}
+    }
+    .spark{
+      position:absolute;
+      width:8px;height:8px;border-radius:50%;
+      background: rgba(99,91,255,0.85);
+      box-shadow: 0 0 0 10px rgba(99,91,255,0.10);
+      animation: sparkFloat 6s var(--ease) infinite;
+      opacity:0.95;
+    }
+    .spark.s1{left:10%; top:18%; animation-duration: 7s;}
+    .spark.s2{left:82%; top:22%; background: rgba(0,214,255,0.85); box-shadow: 0 0 0 10px rgba(0,214,255,0.10); animation-duration: 8s;}
+    .spark.s3{left:72%; top:82%; background: rgba(255,183,77,0.90); box-shadow: 0 0 0 10px rgba(255,183,77,0.12); animation-duration: 6.5s;}
+    .spark.s4{left:26%; top:86%; animation-duration: 7.8s;}
+    @keyframes sparkFloat{
+      0%{transform:translate3d(0,0,0) scale(1);}
+      50%{transform:translate3d(10px,-10px,0) scale(1.08);}
+      100%{transform:translate3d(-8px,8px,0) scale(0.98);}
+    }
+
+    /* ===== Dashboard card ===== */
+    .dashboard-card{
+      width:100%;
+      max-width: 620px;
+      margin-left:auto;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(10,37,64,0.10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      padding: 22px;
+      position:relative;
+      overflow: visible;
+      z-index:1;
+    }
+    .dashboard-card::before{
+      content:"";
+      position:absolute; inset:-80px;
+      background:
+        radial-gradient(600px 260px at 20% 20%, rgba(99,91,255,0.18), rgba(99,91,255,0) 60%),
+        radial-gradient(520px 220px at 90% 10%, rgba(0,214,255,0.16), rgba(0,214,255,0) 60%);
+      filter: blur(18px);
+      opacity:0.85;
+      pointer-events:none;
+      z-index:0;
+    }
+    .dashboard-inner{
+      position:relative;
+      z-index:1;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(10,37,64,0.08);
+      border-radius: calc(var(--radius) - 2px);
+      padding: 18px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .tilt{transform-style: preserve-3d; will-change: transform;}
+    .tilt-glare{
+      position:absolute; inset:0;
+      border-radius: calc(var(--radius) - 2px);
+      background: radial-gradient(600px 220px at var(--gx, 50%) var(--gy, 50%), rgba(255,255,255,0.28), rgba(255,255,255,0));
+      opacity:0;
+      transition: opacity 250ms var(--ease);
+      pointer-events:none;
+    }
+    .tilt:hover .tilt-glare{opacity:1;}
+
+    .notif-chip{
+      position:absolute; top:-14px; right:18px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(10,37,64,0.10);
+      padding:10px 12px;
+      border-radius: 12px;
+      box-shadow: var(--shadow-md);
+      display:flex; align-items:center; gap:10px;
+      z-index:2;
+      pointer-events:none;
+      animation: chipBob 4.2s var(--ease) infinite;
+    }
+    @keyframes chipBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+
+    .db-header{
+      display:flex; justify-content:space-between; align-items:center;
+      padding-bottom:14px;
+      border-bottom: 1px solid rgba(10,37,64,0.10);
+      margin-bottom: 18px;
+      gap: 12px;
+    }
+    .db-title{font-weight:800;color:var(--stripe-navy);font-size:0.95rem;}
+    .db-badge{
+      font-size:0.75rem;font-weight:800;color: #0f5132;
+      background: rgba(34,197,94,0.14);
+      border: 1px solid rgba(34,197,94,0.22);
+      padding: 5px 10px;border-radius:999px;
+      flex-shrink:0;
+    }
+
+    .db-stat-row{display:flex;gap:26px;flex-wrap:wrap;margin-bottom:16px;}
+    .db-stat-label{font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--stripe-muted);margin-bottom:4px;}
+    .db-stat-val{font-size:clamp(1.4rem, 2.2vw, 1.7rem);font-weight:900;color:var(--stripe-navy);}
+    .db-stat-delta{font-size:0.88rem;font-weight:800;color:#0f5132;display:flex;align-items:center;gap:6px;margin-top:4px;}
+
+    .mini-widget{
+      margin-top: 8px;
+      background: rgba(10,37,64,0.03);
+      border: 1px solid rgba(10,37,64,0.08);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .mw-title{font-size:0.78rem;font-weight:900;letter-spacing:0.10em;text-transform:uppercase;color: var(--stripe-muted);margin-bottom: 10px;}
+    .mw-row{
+      display:grid;
+      grid-template-columns: minmax(92px, 110px) 1fr minmax(46px, 52px);
+      gap: 10px;
+      align-items:center;
+      margin: 10px 0;
+    }
+    .mw-label{font-size:0.92rem;font-weight:800;color: var(--stripe-navy);}
+    .mw-val{text-align:right;font-size:0.92rem;font-weight:900;color: var(--stripe-navy);}
+    .mw-bar{height: 10px;border-radius: 999px;background: rgba(10,37,64,0.10);position:relative;overflow:hidden;}
+    .mw-bar > span{position:absolute; inset:0 auto 0 0;width: 0%;border-radius: 999px;background: rgba(99,91,255,0.92);transition: width 900ms var(--ease);}
+    .mw-bar.cover > span{background: rgba(34,197,94,0.85);}
+    .mw-footer{margin-top: 10px;display:flex;justify-content:space-between;align-items:center;gap: 10px;flex-wrap:wrap;}
+    .risk{font-weight:900;color: var(--stripe-navy);display:flex;align-items:center;gap:8px;}
+    .risk .pill-mini{font-size:0.78rem;font-weight:900;padding:6px 10px;border-radius:999px;border: 1px solid rgba(10,37,64,0.10);background: rgba(255,255,255,0.7);}
+    .risk-high{color:#7c2d12;background: rgba(245, 158, 11, 0.18) !important;border-color: rgba(245, 158, 11, 0.30) !important;}
+
+    /* ===== Sections ===== */
+    .bg-light{background: var(--stripe-surface);position:relative;}
+    .bg-light::before{
+      content:"";
+      position:absolute;left:0;right:0;top:-1px;
+      height:clamp(72px, 9vw, 110px);
+      background: var(--stripe-bg);
+      clip-path: polygon(0 0, 100% 45%, 100% 0, 0 0);
+      pointer-events:none;
+    }
+
+    .section-header{margin-bottom: clamp(28px, 4.6vw, 46px); max-width: 720px;}
+    .eyebrow{
+      color: var(--stripe-blurple);
+      font-weight: 900;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      margin-bottom: 12px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    .eyebrow::before{content:"";width:22px;height:2px;border-radius:99px;background: var(--stripe-blurple);opacity: 0.9;}
+    .section-header h2{font-size:var(--h2);margin-bottom:10px;}
+    .section-header p{margin-bottom:0;color:var(--stripe-text);}
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 22px;
+    }
+
+    .card{
+      grid-column: span 4;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(10,37,64,0.10);
+      border-radius: var(--radius);
+      padding: 26px;
+      box-shadow: 0 10px 28px rgba(10,37,64,0.06);
+      transition: transform var(--t), box-shadow var(--t), border-color var(--t);
+      position:relative;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      min-height: 260px;
+    }
+    .card::before{
+      content:"";
+      position:absolute; inset:-80px;
+      background:
+        radial-gradient(520px 220px at 15% 15%, rgba(99,91,255,0.14), rgba(99,91,255,0) 60%),
+        radial-gradient(420px 200px at 90% 10%, rgba(0,214,255,0.10), rgba(0,214,255,0) 60%);
+      filter: blur(18px);
+      opacity:0.0;
+      transition: opacity var(--t);
+      pointer-events:none;
+    }
+    .card:hover{transform: translateY(-8px); box-shadow: var(--shadow-md); border-color: rgba(99,91,255,0.22);}
+    .card:hover::before{opacity:1;}
+    .card:active{transform: translateY(-5px);}
+
+    .card-icon{
+      width: 44px;height:44px;border-radius: 14px;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;color: var(--stripe-blurple);
+      background: rgba(99,91,255,0.10);
+      border: 1px solid rgba(99,91,255,0.16);
+      margin-bottom: 16px;
+    }
+    .card-meta{font-size:0.78rem;letter-spacing:0.10em;text-transform:uppercase;font-weight:900;color: var(--stripe-muted);margin-bottom: 8px;}
+    .card h3{font-size:1.25rem;margin-bottom:10px;}
+    .card p{font-size:1rem;margin-bottom:18px;flex:1;}
+    .impact{
+      background: rgba(10,37,64,0.03);
+      border: 1px solid rgba(10,37,64,0.08);
+      border-radius: 14px;
+      padding: 14px 14px;
+      display:flex; align-items:flex-start; justify-content:space-between; gap: 12px;
+      flex-wrap:wrap;
+    }
+    .impact .label{font-size:0.72rem;letter-spacing:0.10em;text-transform:uppercase;font-weight:900;color: var(--stripe-muted);margin-bottom: 4px;}
+    .impact .text{font-weight:850;color: var(--stripe-navy);font-size: 0.98rem;}
+    .hi{color:#16a34a;font-weight:900;}
+
+    /* About */
+    .about-layout{display:grid;grid-template-columns: 1.1fr 0.9fr;gap: clamp(22px, 5vw, 56px);align-items:flex-start;}
+    .edu-box{border-left: 3px solid var(--stripe-blurple);padding-left: 18px;margin-top: 18px;}
+    .edu-degree{font-weight:900;color:var(--stripe-navy);font-size:1.08rem;}
+    .edu-school{font-weight:750;color:var(--stripe-blurple);font-size:0.98rem;margin-top:4px;}
+    .edu-meta{font-size:0.88rem;color:var(--stripe-muted);margin-top:4px;}
+
+    .skills-card{
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(10,37,64,0.10);
+      border-radius: var(--radius);
+      padding: 26px;
+      box-shadow: 0 10px 28px rgba(10,37,64,0.06);
+      position:relative;
+      overflow:hidden;
+    }
+    .skills-card h3{margin-bottom: 18px; font-size:1.2rem;}
+    .skill-section + .skill-section{margin-top: 18px;}
+    .skill-section h4{font-size:0.95rem;color:var(--stripe-navy);margin-bottom:10px;}
+    .skill-list li{
+      position:relative;
+      padding-left: 16px;
+      margin: 8px 0;
+      color: #525f7f;
+      font-weight: 550;
+      font-size: 0.96rem;
+    }
+    .skill-list li::before{
+      content:"";
+      position:absolute; left:0; top:10px;
+      width:6px;height:6px;border-radius:50%;
+      background: var(--stripe-blurple);
+      box-shadow: 0 0 0 6px rgba(99,91,255,0.10);
+    }
+
+    /* Projects */
+    .research-grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+      margin-top: 10px;
+    }
+    .research-card{
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(10,37,64,0.10);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: 0 10px 28px rgba(10,37,64,0.05);
+      transition: transform var(--t), border-color var(--t), box-shadow var(--t);
+      position:relative;
+      overflow:hidden;
+    }
+    .research-card:hover{transform: translateY(-6px); border-color: rgba(99,91,255,0.20); box-shadow: var(--shadow-md);}
+    .research-card h4{font-size:1.08rem;margin-bottom: 8px;}
+    .research-card p{font-size:0.98rem;margin-bottom: 12px;}
+    .tag-row{display:flex;gap:8px;flex-wrap:wrap;}
+    .tag{
+      background: rgba(10,37,64,0.04);
+      border: 1px solid rgba(10,37,64,0.08);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #525f7f;
+    }
+
+    /* Contact */
+    .contact-cta{
+      background: var(--stripe-surface);
+      text-align:center;
+      border-top: 1px solid rgba(10,37,64,0.08);
+      position:relative;
+      overflow:hidden;
+      padding-bottom: calc(var(--section-y) + env(safe-area-inset-bottom));
+    }
+    .contact-cta .container{position:relative; z-index:2;}
+    .footer-line{
+      margin-top: 44px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(10,37,64,0.10);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap: 12px;
+      font-size: 0.92rem;
+      color: var(--stripe-muted);
+    }
+    .footer-line a{color: var(--stripe-muted); font-weight: 750;}
+    .footer-line a:hover{color: var(--stripe-navy);}
+
+    /* Reveal */
+    [data-reveal]{
+      opacity:0;
+      transform: translateY(16px) scale(0.985);
+      filter: blur(6px);
+      transition: opacity 900ms var(--ease), transform 900ms var(--ease), filter 900ms var(--ease);
+      will-change: transform, opacity, filter;
+    }
+    [data-reveal].in{opacity:1; transform: translateY(0) scale(1); filter: blur(0);}
+
+    /* Magnet */
+    .magnet{transform: translate3d(var(--mx, 0), var(--my, 0), 0);}
+
+    /* ===== Responsive rules ===== */
+    /* Large tablets / smaller laptops */
+    @media (max-width: 1100px){
+      .hero-grid{grid-template-columns: 1fr; text-align:center;}
+      .hero-text p{margin-left:auto;margin-right:auto;}
+      .dashboard-card{margin: 0 auto;}
+      .btn-group{justify-content:center;}
+      .about-layout{grid-template-columns: 1fr;}
+    }
+
+    /* Tablets */
+    @media (max-width: 900px){
+      .nav-links{display:none;}
+      .menu-btn{display:flex;}
+      .mobile-panel{display:block; max-height:0; overflow:hidden; transition: max-height 360ms var(--ease);}
+      nav.open .mobile-panel{max-height: 320px;}
+      .grid{gap:16px;}
+      .card{grid-column: span 6;}
+    }
+
+    /* Phones */
+    @media (max-width: 640px){
+      .hero{padding-top: calc(108px + env(safe-area-inset-top));}
+      .btn-group{gap:10px;}
+      .btn{width:100%; justify-content:center;}
+      .link-arrow{width:100%; justify-content:center; padding: 12px 14px; background: rgba(10,37,64,0.03); border: 1px solid rgba(10,37,64,0.08);}
+      .db-stat-row{gap:18px;}
+      .mw-row{grid-template-columns: 84px 1fr 48px;}
+      .card{grid-column: span 12;}
+      .research-grid{grid-template-columns: 1fr;}
+      .rings{opacity:0.55;}
+    }
+
+    /* Very small phones */
+    @media (max-width: 380px){
+      .notif-chip{right:10px;}
+      .dashboard-card{padding:18px;}
+      .dashboard-inner{padding:16px;}
+      .mw-title{letter-spacing:0.08em;}
+    }
+
+    /* Touch devices: reduce expensive hover effects */
+    @media (hover: none){
+      .pill:hover,.card:hover,.btn-primary:hover,.btn-ghost:hover{transform:none; box-shadow:inherit;}
+      .btn:hover::after{transform: translateX(-50%) rotate(8deg);}
+      .tilt-glare{display:none;}
+    }
+
+    /* Reduce motion preference */
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto;}
+      .bg-grid,.blob,.ring,.spark,.notif-chip,.hero-text h1{animation:none !important;}
+      [data-reveal]{transition:none !important; filter:none !important; transform:none !important; opacity:1 !important;}
+      .btn::after{display:none;}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-fx" aria-hidden="true">
+    <div class="bg-grid"></div>
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+  </div>
+
+  <nav id="topNav">
+    <div class="container nav-content">
+      <a class="logo" href="#top" aria-label="Home">
+        <span class="logo-dot" aria-hidden="true"></span>
+        mallikarjun.
+      </a>
+
+      <div class="nav-links" aria-label="Primary navigation">
+        <a href="#about" class="link-accent">About me</a>
+        <a href="#work">Experience</a>
+        <a href="#research">Projects</a>
+        <a href="#contact" class="link-accent">Contact</a>
+        <a href="mailto:mallikarjun@wustl.edu" class="cta-small">Email me</a>
+      </div>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobilePanel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="mobile-panel" id="mobilePanel" aria-label="Mobile navigation">
+      <div class="container inner">
+        <a href="#about" class="close-on-click">About me</a>
+        <a href="#work" class="close-on-click">Experience</a>
+        <a href="#research" class="close-on-click">Projects</a>
+        <a href="#contact" class="close-on-click">Contact</a>
+        <a href="mailto:mallikarjun@wustl.edu" class="primary close-on-click">Email me</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-text" data-reveal>
+          <div class="hero-kicker">
+            <span class="chip">SUPPLY CHAIN + ANALYTICS</span>
+            <span>Built for real world ops</span>
+          </div>
+
+          <h1>I turn supply chain chaos into calm, measurable control.</h1>
+          <p>
+            I build forecasting models, dashboards, and inventory logic that help teams stop guessing and start hitting targets.
+            I like messy data, tight timelines, and problems where the impact is obvious.
+          </p>
+
+          <div class="hero-meta">
+            <span class="pill"><span class="dot" aria-hidden="true"></span><b>WashU</b> Industrial Engineering</span>
+            <span class="pill"><span class="dot" aria-hidden="true"></span><b>GPA</b> 4.0</span>
+            <span class="pill"><span class="dot" aria-hidden="true"></span><b>CAPM</b> certified</span>
+          </div>
+
+          <div class="btn-group">
+            <a href="#work" class="btn btn-primary magnet">View experience <span class="arrow">→</span></a>
+            <a href="#about" class="btn btn-ghost magnet">About me <span class="arrow">→</span></a>
+            <a class="link-arrow magnet" href="https://www.linkedin.com/in/mallikarjun-verma-capm-368593178/" target="_blank" rel="noreferrer">
+              LinkedIn <span class="arrow">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="visual-wrap" data-reveal>
+          <div class="rings" aria-hidden="true">
+            <div class="ring r1"></div>
+            <div class="ring r2"></div>
+            <div class="ring r3"></div>
+            <div class="spark s1"></div>
+            <div class="spark s2"></div>
+            <div class="spark s3"></div>
+            <div class="spark s4"></div>
+          </div>
+
+          <div class="dashboard-card tilt" id="tiltCard">
+            <div class="notif-chip">
+              <div style="width:10px;height:10px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 6px rgba(34,197,94,0.12);"></div>
+              <div style="font-size:0.88rem;font-weight:900;color:#0a2540;">Stockout prevented</div>
+            </div>
+
+            <div class="dashboard-inner">
+              <div class="tilt-glare"></div>
+
+              <div class="db-header">
+                <div class="db-title">Inventory Forecast Snapshot</div>
+                <span class="db-badge">LIVE</span>
+              </div>
+
+              <div class="db-stat-row">
+                <div>
+                  <div class="db-stat-label">Forecast accuracy</div>
+                  <div class="db-stat-val" data-count="83">0%</div>
+                  <div class="db-stat-delta">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="18 15 12 9 6 15"></polyline>
+                    </svg>
+                    +15% vs prev
+                  </div>
+                </div>
+                <div>
+                  <div class="db-stat-label">Inventory freed</div>
+                  <div class="db-stat-val" data-money="5200">$0</div>
+                </div>
+              </div>
+
+              <div class="mini-widget" aria-label="Lead time versus inventory cover">
+                <div class="mw-title">Lead time vs inventory cover</div>
+
+                <div class="mw-row">
+                  <div class="mw-label">Lead time</div>
+                  <div class="mw-bar"><span data-fill="70"></span></div>
+                  <div class="mw-val">42d</div>
+                </div>
+
+                <div class="mw-row">
+                  <div class="mw-label">Cover</div>
+                  <div class="mw-bar cover"><span data-fill="10"></span></div>
+                  <div class="mw-val">6d</div>
+                </div>
+
+                <div class="mw-footer">
+                  <div class="risk">
+                    Stockout risk
+                    <span class="pill-mini risk-high">High</span>
+                  </div>
+                  <a class="link-arrow" href="#research">See analysis <span class="arrow">→</span></a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section-padding">
+      <div class="container about-layout">
+        <div data-reveal>
+          <div class="section-header">
+            <div class="eyebrow">About me</div>
+            <h2>From Mumbai to St. Louis, and somehow I still love spreadsheets.</h2>
+            <p>
+              I started in IT, got pulled into how products actually move (and why they do not), and ended up deep in supply chain analytics.
+              I like building systems that teams actually use: clean dashboards, sharp metrics, and forecasting logic that survives real life.
+            </p>
+          </div>
+
+          <h3 style="font-size:1.25rem;margin-bottom:8px;">Education</h3>
+
+          <div class="edu-box">
+            <div class="edu-degree">M.S. Industrial Engineering</div>
+            <div class="edu-school">Washington University in St. Louis</div>
+            <div class="edu-meta">Graduated Dec 2025 • GPA 4.0 • Supply chain concentration</div>
+          </div>
+
+          <div class="edu-box" style="border-left-color: rgba(10,37,64,0.25);">
+            <div class="edu-degree">B.S. Information Technology</div>
+            <div class="edu-school">NMIMS, Mumbai</div>
+            <div class="edu-meta">May 2023 • Data visualization and software development</div>
+          </div>
+
+          <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
+            <a class="btn btn-ghost magnet" href="mailto:mallikarjun@wustl.edu">Email <span class="arrow">→</span></a>
+            <a class="btn btn-ghost magnet" href="tel:3142678095">Call <span class="arrow">→</span></a>
+            <a class="btn btn-primary magnet" href="https://www.linkedin.com/in/mallikarjun-verma-capm-368593178/" target="_blank" rel="noreferrer">
+              LinkedIn <span class="arrow">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="skills-card" data-reveal>
+          <h3>Technical Arsenal</h3>
+
+          <div class="skill-section">
+            <h4>Analytics and Modeling</h4>
+            <ul class="skill-list">
+              <li>Demand forecasting and predictive modeling</li>
+              <li>ABC-XYZ segmentation and inventory logic</li>
+              <li>Network optimization and lead time analysis</li>
+              <li>Risk analysis and KPI design</li>
+            </ul>
+          </div>
+
+          <div class="skill-section">
+            <h4>Tools and Stack</h4>
+            <ul class="skill-list">
+              <li>Python (Pandas, Scikit-learn)</li>
+              <li>SQL</li>
+              <li>Tableau</li>
+              <li>SAP MM and SD</li>
+              <li>Advanced Excel (Solver, automation)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work" class="section-padding bg-light">
+      <div class="container">
+        <div class="section-header" data-reveal>
+          <div class="eyebrow">Professional experience</div>
+          <h2>Solving real problems for real organizations.</h2>
+          <p>Projects where the outcomes were clear, the constraints were real, and the numbers mattered.</p>
+        </div>
+
+        <div class="grid">
+          <article class="card" data-reveal>
+            <div class="card-icon">01</div>
+            <div class="card-meta">Startup accelerator • 2025</div>
+            <h3>Forecasting the unpredictable</h3>
+            <p>Built a predictive model and KPI dashboards to move a high variance SKU operation from reactive firefighting to proactive planning.</p>
+            <div class="impact">
+              <div>
+                <div class="label">Key impact</div>
+                <div class="text"><span class="hi">83%</span> accuracy • <span class="hi">$5k</span> inventory freed</div>
+              </div>
+              <a class="link-arrow" href="#research">See projects <span class="arrow">→</span></a>
+            </div>
+          </article>
+
+          <article class="card" data-reveal>
+            <div class="card-icon">02</div>
+            <div class="card-meta">ONGC • 2022</div>
+            <h3>The $50K inventory liberation</h3>
+            <p>Ran ABC-XYZ segmentation and reset reorder points for a $2M equipment portfolio, while mapping bottlenecks across a 200km delivery network.</p>
+            <div class="impact">
+              <div>
+                <div class="label">Key impact</div>
+                <div class="text"><span class="hi">$50,000</span> reduced • <span class="hi">5%</span> delivery boost</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card" data-reveal>
+            <div class="card-icon">03</div>
+            <div class="card-meta">NGO project management • 2023</div>
+            <h3>Dashboards that actually got used</h3>
+            <p>Built Tableau dashboards to track cost, schedule, and backlog across five workstreams, replacing gut feel with live visibility.</p>
+            <div class="impact">
+              <div>
+                <div class="label">Key impact</div>
+                <div class="text"><span class="hi">80%</span> on time milestones</div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="card" style="margin-top:22px;" data-reveal>
+          <div class="card-meta">WashU Engineering Society</div>
+          <h3 style="margin-bottom:10px;">Event planning optimization</h3>
+          <p style="margin-bottom:14px;">Forecasted demand and benchmarked suppliers to reduce material shortfalls by 20% and generate 10% cost savings across procurement cycles.</p>
+          <div class="impact">
+            <div>
+              <div class="label">Key impact</div>
+              <div class="text"><span class="hi">20%</span> shortfall reduction • <span class="hi">10%</span> cost savings</div>
+            </div>
+            <a class="link-arrow" href="#contact">Work with me <span class="arrow">→</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="research" class="section-padding">
+      <div class="container">
+        <div class="section-header" data-reveal>
+          <div class="eyebrow">Side projects</div>
+          <h2>Small experiments. Big learning. Clean visuals.</h2>
+          <p>Fun, readable work that shows how I think without turning the page into a textbook.</p>
+        </div>
+
+        <div class="research-grid">
+          <div class="research-card" data-reveal>
+            <h4>The invisible supply chain problem</h4>
+            <p>A framework showing how companies lose millions when they do not track true end to end lead time across supplier, manufacturing, and shipping.</p>
+            <div class="tag-row">
+              <span class="tag">Python</span>
+              <span class="tag">Lead time analysis</span>
+              <span class="tag">Inventory logic</span>
+            </div>
+          </div>
+
+          <div class="research-card" data-reveal>
+            <h4>When AI meets cancer detection</h4>
+            <p>Used EfficientNet-B0 for metastasis detection in tissue patches, balancing compute efficiency with strong accuracy.</p>
+            <div class="tag-row">
+              <span class="tag">Computer vision</span>
+              <span class="tag">TensorFlow</span>
+              <span class="tag">Model evaluation</span>
+            </div>
+          </div>
+
+          <div class="research-card" data-reveal>
+            <h4>Restaurant simulation meets machine learning</h4>
+            <p>Compared manual ordering vs an ML driven reorder system with demand forecasting, showing meaningful savings potential.</p>
+            <div class="tag-row">
+              <span class="tag">Simulation</span>
+              <span class="tag">Forecasting</span>
+              <span class="tag">Python</span>
+            </div>
+          </div>
+
+          <div class="research-card" data-reveal>
+            <h4>Lost revenue from stockouts</h4>
+            <p>Showed how poor visibility turns into missed revenue: a few SKUs can drive outsized losses when lead time and inventory cover are disconnected.</p>
+            <div class="tag-row">
+              <span class="tag">Inventory cover</span>
+              <span class="tag">Revenue impact</span>
+              <span class="tag">Dashboards</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section-padding contact-cta">
+      <div class="container" data-reveal>
+        <h2 style="font-size:var(--h2);margin-bottom:14px;">Want to build something useful?</h2>
+        <p style="max-width:680px;margin:0 auto 26px;">
+          I am looking for full time roles where I can apply analytics and supply chain thinking to solve messy, expensive problems.
+        </p>
+
+        <div class="btn-group" style="justify-content:center;">
+          <a href="mailto:mallikarjun@wustl.edu" class="btn btn-primary magnet">Email me <span class="arrow">→</span></a>
+          <a href="https://www.linkedin.com/in/mallikarjun-verma-capm-368593178/" target="_blank" rel="noreferrer" class="btn btn-ghost magnet">LinkedIn <span class="arrow">→</span></a>
+          <a href="tel:3142678095" class="btn btn-ghost magnet">Call <span class="arrow">→</span></a>
+        </div>
+
+        <div class="footer-line">
+          <div>© 2025 Mallikarjun Verma</div>
+          <div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:flex-end;">
+            <a href="https://www.linkedin.com/in/mallikarjun-verma-capm-368593178/" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="mailto:mallikarjun@wustl.edu">mallikarjun@wustl.edu</a>
+            <a href="tel:3142678095">+1 (314) 267-8095</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const nav = document.getElementById("topNav");
+    const menuBtn = document.getElementById("menuBtn");
+    const mobilePanel = document.getElementById("mobilePanel");
+
+    // Navbar scroll state
+    const onScroll = () => {
+      if (window.scrollY > 10) nav.classList.add("scrolled");
+      else nav.classList.remove("scrolled");
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    // Mobile menu toggle
+    const setMenu = (open) => {
+      nav.classList.toggle("open", open);
+      menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    };
+    menuBtn.addEventListener("click", () => setMenu(!nav.classList.contains("open")));
+    mobilePanel.querySelectorAll(".close-on-click").forEach(a => {
+      a.addEventListener("click", () => setMenu(false));
+    });
+
+    // Close menu on resize up to desktop
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 900) setMenu(false);
+    }, { passive: true });
+
+    // Reveal
+    const els = document.querySelectorAll("[data-reveal]");
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add("in");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(el => io.observe(el));
+
+    // Animate widget bars
+    const fills = document.querySelectorAll("[data-fill]");
+    const fillObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const pct = e.target.getAttribute("data-fill") || "0";
+        e.target.style.width = pct + "%";
+        fillObserver.unobserve(e.target);
+      });
+    }, { threshold: 0.6 });
+    fills.forEach(span => fillObserver.observe(span));
+
+    // Count up numbers in the card
+    function animateNumber(el, to, suffix = "", duration = 900){
+      const start = 0;
+      const t0 = performance.now();
+      const step = (now) => {
+        const p = Math.min(1, (now - t0) / duration);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const val = Math.round(start + (to - start) * eased);
+        el.textContent = val.toLocaleString() + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+    function animateMoney(el, to, duration = 900){
+      const t0 = performance.now();
+      const step = (now) => {
+        const p = Math.min(1, (now - t0) / duration);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const val = Math.round(to * eased);
+        el.textContent = "$" + (val >= 1000 ? (val/1000).toFixed(1) + "k" : val.toString());
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
+    const card = document.getElementById("tiltCard");
+    const stats = card.querySelectorAll("[data-count],[data-money]");
+    const statsObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        stats.forEach(s => {
+          if (s.dataset.count) animateNumber(s, Number(s.dataset.count), "%", 900);
+          if (s.dataset.money) animateMoney(s, Number(s.dataset.money), 1000);
+        });
+        statsObs.disconnect();
+      });
+    }, { threshold: 0.35 });
+    statsObs.observe(card);
+
+    // Tilt + glare (disable on touch / small screens)
+    const canTilt = () => window.matchMedia("(hover: hover)").matches && window.innerWidth > 900;
+    function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
+    const maxTilt = 10;
+
+    function onTiltMove(e){
+      const r = card.getBoundingClientRect();
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      const px = (x / r.width) * 2 - 1;
+      const py = (y / r.height) * 2 - 1;
+      const rx = clamp(-py * maxTilt, -maxTilt, maxTilt);
+      const ry = clamp(px * maxTilt, -maxTilt, maxTilt);
+      card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
+      card.style.setProperty("--gx", (x / r.width) * 100 + "%");
+      card.style.setProperty("--gy", (y / r.height) * 100 + "%");
+    }
+    function onTiltLeave(){
+      card.style.transform = "rotateX(0deg) rotateY(0deg) translateY(0)";
+      card.style.setProperty("--gx", "50%");
+      card.style.setProperty("--gy", "50%");
+    }
+    function bindTilt(){
+      card.removeEventListener("mousemove", onTiltMove);
+      card.removeEventListener("mouseleave", onTiltLeave);
+      card.style.transform = "rotateX(0deg) rotateY(0deg) translateY(0)";
+      if (canTilt()){
+        card.addEventListener("mousemove", onTiltMove);
+        card.addEventListener("mouseleave", onTiltLeave);
+      }
+    }
+    bindTilt();
+    window.addEventListener("resize", bindTilt, { passive: true });
+
+    // Magnetic hover (disable on touch)
+    const magnets = document.querySelectorAll(".magnet");
+    function bindMagnets(){
+      const ok = window.matchMedia("(hover: hover)").matches;
+      magnets.forEach(el => {
+        el.onmousemove = null;
+        el.onmouseleave = null;
+        el.style.setProperty("--mx", "0px");
+        el.style.setProperty("--my", "0px");
+        if (!ok) return;
+        el.addEventListener("mousemove", (e) => {
+          const r = el.getBoundingClientRect();
+          const x = e.clientX - r.left - r.width / 2;
+          const y = e.clientY - r.top - r.height / 2;
+          el.style.setProperty("--mx", (x * 0.10) + "px");
+          el.style.setProperty("--my", (y * 0.12) + "px");
+        });
+        el.addEventListener("mouseleave", () => {
+          el.style.setProperty("--mx", "0px");
+          el.style.setProperty("--my", "0px");
+        });
+      });
+    }
+    bindMagnets();
+
+    // Reduce motion preference
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setMenu(false);
+    }
+  </script>
+</body>
+</html>
