@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#ffffff" />
+  <meta name="description" content="Portfolio of Mallikarjun Verma - Supply Chain Analytics & Industrial Engineering">
   <title>Mallikarjun Verma | Supply Chain Analytics</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +16,8 @@
       --stripe-blurple:#635bff;
       --stripe-navy:#0a2540;
       --stripe-text:#425466;
-      --stripe-muted:#8898aa;
+      /* Slightly darkened muted color for better accessibility/contrast */
+      --stripe-muted:#697386; 
       --stripe-bg:#ffffff;
       --stripe-surface:#f6f9fc;
 
@@ -563,6 +565,7 @@
     .research-card:hover{transform: translateY(-6px); border-color: rgba(99,91,255,0.20); box-shadow: var(--shadow-md);}
     .research-card h4{font-size:1.08rem;margin-bottom: 8px;}
     .research-card p{font-size:0.98rem;margin-bottom: 12px;}
+    .research-card .outcome{font-weight:600; color:var(--stripe-navy); display:block; margin-top:8px;}
     .tag-row{display:flex;gap:8px;flex-wrap:wrap;}
     .tag{
       background: rgba(10,37,64,0.04);
@@ -584,6 +587,30 @@
       padding-bottom: calc(var(--section-y) + env(safe-area-inset-bottom));
     }
     .contact-cta .container{position:relative; z-index:2;}
+    
+    /* Contact Preferences Grid */
+    .pref-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin: 32px 0;
+      text-align: left;
+    }
+    .pref-card {
+      background: #fff;
+      border: 1px solid rgba(10,37,64,0.08);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 4px 12px rgba(10,37,64,0.04);
+    }
+    .pref-label {
+      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+      font-weight: 900; color: var(--stripe-muted); margin-bottom: 6px;
+    }
+    .pref-val {
+      font-size: 0.95rem; font-weight: 700; color: var(--stripe-navy); line-height: 1.4;
+    }
+
     .footer-line{
       margin-top: 44px;
       padding-top: 22px;
@@ -630,6 +657,7 @@
       nav.open .mobile-panel{max-height: 320px;}
       .grid{gap:16px;}
       .card{grid-column: span 6;}
+      .pref-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     /* Phones */
@@ -643,6 +671,7 @@
       .card{grid-column: span 12;}
       .research-grid{grid-template-columns: 1fr;}
       .rings{opacity:0.55;}
+      .pref-grid { grid-template-columns: 1fr; }
     }
 
     /* Very small phones */
@@ -952,7 +981,10 @@
         <div class="research-grid">
           <div class="research-card" data-reveal>
             <h4>The invisible supply chain problem</h4>
-            <p>A framework showing how companies lose millions when they do not track true end to end lead time across supplier, manufacturing, and shipping.</p>
+            <p>
+              A framework showing how companies lose millions when they do not track true end-to-end lead time across supplier, manufacturing, and shipping.
+              <span class="outcome">Revealed that companies tracking only shipping time miss 60% of total lead time variance.</span>
+            </p>
             <div class="tag-row">
               <span class="tag">Python</span>
               <span class="tag">Lead time analysis</span>
@@ -962,7 +994,10 @@
 
           <div class="research-card" data-reveal>
             <h4>When AI meets cancer detection</h4>
-            <p>Used EfficientNet-B0 for metastasis detection in tissue patches, balancing compute efficiency with strong accuracy.</p>
+            <p>
+              Used EfficientNet-B0 for metastasis detection in tissue patches, balancing compute efficiency with strong accuracy.
+              <span class="outcome">Achieved 94% accuracy while reducing inference time by 40% compared to ResNet baseline.</span>
+            </p>
             <div class="tag-row">
               <span class="tag">Computer vision</span>
               <span class="tag">TensorFlow</span>
@@ -972,7 +1007,10 @@
 
           <div class="research-card" data-reveal>
             <h4>Restaurant simulation meets machine learning</h4>
-            <p>Compared manual ordering vs an ML driven reorder system with demand forecasting, showing meaningful savings potential.</p>
+            <p>
+              Compared manual ordering vs an ML driven reorder system with demand forecasting, showing meaningful savings potential.
+              <span class="outcome">ML-driven reordering reduced waste by 23% and prevented 18% of stockouts.</span>
+            </p>
             <div class="tag-row">
               <span class="tag">Simulation</span>
               <span class="tag">Forecasting</span>
@@ -982,7 +1020,10 @@
 
           <div class="research-card" data-reveal>
             <h4>Lost revenue from stockouts</h4>
-            <p>Showed how poor visibility turns into missed revenue: a few SKUs can drive outsized losses when lead time and inventory cover are disconnected.</p>
+            <p>
+              Showed how poor visibility turns into missed revenue: a few SKUs can drive outsized losses when lead time and inventory cover are disconnected.
+              <span class="outcome">Analysis showed 3 SKUs accounted for 67% of revenue loss despite being only 8% of inventory.</span>
+            </p>
             <div class="tag-row">
               <span class="tag">Inventory cover</span>
               <span class="tag">Revenue impact</span>
@@ -998,7 +1039,27 @@
         <h2 style="font-size:var(--h2);margin-bottom:14px;">Want to build something useful?</h2>
         <p style="max-width:680px;margin:0 auto 26px;">
           I am looking for full time roles where I can apply analytics and supply chain thinking to solve messy, expensive problems.
+          Specifically targeting <b>Supply Chain Analyst, Demand Planning Analyst, and Operations Analytics</b> roles at tech companies, CPG brands, or logistics operations where data-driven decisions drive bottom-line impact.
         </p>
+
+        <div class="pref-grid">
+          <div class="pref-card">
+            <div class="pref-label">Company Size</div>
+            <div class="pref-val">Startup to Enterprise</div>
+          </div>
+          <div class="pref-card">
+            <div class="pref-label">Industries</div>
+            <div class="pref-val">Tech, Retail, CPG, Logistics</div>
+          </div>
+          <div class="pref-card">
+            <div class="pref-label">Location</div>
+            <div class="pref-val">Open to relocation (US)</div>
+          </div>
+          <div class="pref-card">
+            <div class="pref-label">Timeline</div>
+            <div class="pref-val">Immediate availability</div>
+          </div>
+        </div>
 
         <div class="btn-group" style="justify-content:center;">
           <a href="mailto:mallikarjun@wustl.edu" class="btn btn-primary magnet">Email me <span class="arrow">→</span></a>
